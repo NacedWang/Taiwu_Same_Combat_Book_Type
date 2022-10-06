@@ -37,10 +37,15 @@ namespace SameCombatBookType
             AdaptableLog.Info(string.Format("SameCombatBookType setting : \n IndexType :{0} \n ", IndexType));
         }
 
-        [HarmonyPostfix, HarmonyPatch(typeof(ItemDomain), "GetElement_SkillBooks", new Type[] { typeof(int) }, new ArgumentType[] { ArgumentType.Normal })]
-        public static void post(ref ItemDomain __instance, int objectId)
+        [HarmonyPrefix, HarmonyPatch(typeof(ItemDomain), "AddElement_SkillBooks", new Type[] { typeof(int) ,typeof(SkillBook) }, new ArgumentType[] { ArgumentType.Normal , ArgumentType.Normal })]
+        public static bool prefixAddElementSkillBooks(ref ItemDomain __instance, int objectId, SkillBook instance)
         {
-            AdaptableLog.Info("patch GetElement_SkillBooks " + Convert.ToString(objectId));
+            if (instance.IsCombatSkillBook())
+            {
+                AdaptableLog.Info("patch pre AddElement_SkillBooks : " + Convert.ToString(objectId));
+                AdaptableLog.Info("patch pre AddElement_SkillBooks :" + Convert.ToString(instance.GetCombatSkillType()));
+            }
+            return true;
         }
     }
 }
