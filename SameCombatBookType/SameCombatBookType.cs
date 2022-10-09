@@ -93,6 +93,7 @@ namespace SameCombatBookType
                            
                             element_SkillBooks.SetPageIncompleteState(num, context);
                             */
+                            element_SkillBooks.SetPageIncompleteState(0, context);
                             // 耐久
                             //element_SkillBooks.SetMaxDurability(30, context);
                             //element_SkillBooks.SetCurrDurability(30, context);
