@@ -23,7 +23,7 @@ return {
 			SettingType = "Dropdown",
 			DefaultValue = 2
 		},
-		[3] = 
+		[2] = 
 		{
 			DisplayName = "第一篇",
 			Description = "第一篇类型",
@@ -95,8 +95,7 @@ return {
 			Key = "BookGetType",
 			Options = 
 			{
-				[1] = "额外获取",
-				[2] = "替换原本"
+				[1] = "替换原本"
 			},
 			SettingType = "Dropdown",
 			DefaultValue = 0

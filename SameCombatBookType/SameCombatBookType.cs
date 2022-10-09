@@ -33,7 +33,7 @@ namespace SameCombatBookType
         private static int BookFourType;
         private static int BookFiveType;
         private static int BookGetType;
-        private static ushort[] BookTypeArray = { };
+        private static ushort[] BookTypeArray = new ushort[5];
 
         public override void Initialize()
         {
@@ -46,15 +46,15 @@ namespace SameCombatBookType
             AdaptableLog.Info("SameCombatBookType OnModSettingUpdate");
             DomainManager.Mod.GetSetting(base.ModIdStr, "BookIndexType", ref SameCombatBookType.BookIndexType);
             DomainManager.Mod.GetSetting(base.ModIdStr, "BookOneType", ref SameCombatBookType.BookOneType);
-            BookTypeArray.AddItem((ushort)BookOneType);
+            BookTypeArray[0] = (ushort)BookOneType;
             DomainManager.Mod.GetSetting(base.ModIdStr, "BookTwoType", ref SameCombatBookType.BookTwoType);
-            BookTypeArray.AddItem((ushort)BookTwoType);
+            BookTypeArray[1] = ((ushort)BookTwoType);
             DomainManager.Mod.GetSetting(base.ModIdStr, "BookThreeType", ref SameCombatBookType.BookThreeType);
-            BookTypeArray.AddItem((ushort)BookThreeType);
+            BookTypeArray[2]=((ushort)BookThreeType);
             DomainManager.Mod.GetSetting(base.ModIdStr, "BookFourType", ref SameCombatBookType.BookFourType);
-            BookTypeArray.AddItem((ushort)BookFourType);
+            BookTypeArray[3] = ((ushort)BookFourType);
             DomainManager.Mod.GetSetting(base.ModIdStr, "BookFiveType", ref SameCombatBookType.BookFiveType);
-            BookTypeArray.AddItem((ushort)BookFiveType);
+            BookTypeArray[4] = ((ushort)BookFiveType);
             DomainManager.Mod.GetSetting(base.ModIdStr, "BookGetType", ref SameCombatBookType.BookGetType);
             AdaptableLog.Info(string.Format("SameCombatBookType setting : \n BookIndexType :{0} \n BookOneType : {1} \n ", BookIndexType, BookOneType));
         }
@@ -74,13 +74,14 @@ namespace SameCombatBookType
                 {
                     if (item.ItemType == 10)
                     {
-                        AdaptableLog.Info("   ---   " + Convert.ToString(item.ItemType));
                         AdaptableLog.Info("   ---   " + Convert.ToString(item.TemplateId));
                         AdaptableLog.Info("   ---   " + Convert.ToString(item.Id));
                         SkillBook element_SkillBooks = DomainManager.Item.GetElement_SkillBooks(item.Id);
                         AdaptableLog.Info("   ---   " + Convert.ToString(element_SkillBooks.GetName()));
                         if (element_SkillBooks.IsCombatSkillBook())
                         {
+                            /*
+                            // 残缺状态
                             ushort num = 0;
                             ushort num2 = 4;
                             for (int j = 0; j < 5; j++)
@@ -89,23 +90,25 @@ namespace SameCombatBookType
                                 num2 *= 4;
                             }
                             AdaptableLog.Info("   ---  num  " + Convert.ToString(num));
-                            // 残缺状态
+                           
                             element_SkillBooks.SetPageIncompleteState(num, context);
+                            */
                             // 耐久
                             //element_SkillBooks.SetMaxDurability(30, context);
                             //element_SkillBooks.SetCurrDurability(30, context);
-                            // 总纲
-                            Traverse.Create(element_SkillBooks).Field("_pageTypes").SetValue((byte)BookIndexType);
-                            //element_SkillBooks.SetModificationState(())
-                            // element_SkillBooks.InvalidateSelfAndInfluencedCache(5, context);
-                            //bool isArchive = element_SkillBooks.CollectionHelperData.IsArchive;
-                            /*byte b = 1;
-                            if (isArchive)
+                            byte b = (byte)BookIndexType;
+                            byte b2 = 4;
+                            for (int k = 0; k < 5; k++)
                             {
-                                byte* ptr = OperationAdder.DynamicObjectCollection_SetFixedField<int>(element_SkillBooks.CollectionHelperData.DomainId, element_SkillBooks.CollectionHelperData.DataId, item.Id, 11U, 1);
-                                *ptr = b;
-                                ptr++;
-                            }*/
+                                b2 *= 2;
+                                bool flag = BookTypeArray[k] == 1;
+                                if (flag)
+                                {
+                                    b |= b2;
+                                }
+                            }
+                            // 总纲
+                            Traverse.Create(element_SkillBooks).Field("_pageTypes").SetValue((byte)b);
                             Character element_Objects = DomainManager.Character.GetElement_Objects(DomainManager.Taiwu.GetTaiwuCharId());
                             element_Objects.AddInventoryItem(context, item, 1);
                         }
