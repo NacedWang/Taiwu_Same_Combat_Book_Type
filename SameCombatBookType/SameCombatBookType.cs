@@ -1,4 +1,4 @@
-﻿using GameData.ArchiveData;
+using GameData.ArchiveData;
 using GameData.Common;
 using GameData.Domains;
 using GameData.Domains.Character;
@@ -27,6 +27,12 @@ namespace SameCombatBookType
 
         // 总纲
         private static int BookIndexType;
+        private static int BookOneType;
+        private static int BookTwoType;
+        private static int BookThreeType;
+        private static int BookFourType;
+        private static int BookFiveType;
+        private static int BookGetType;
 
         public override void Initialize()
         {
@@ -38,7 +44,13 @@ namespace SameCombatBookType
         {
             AdaptableLog.Info("SameCombatBookType OnModSettingUpdate");
             DomainManager.Mod.GetSetting(base.ModIdStr, "BookIndexType", ref SameCombatBookType.BookIndexType);
-            AdaptableLog.Info(string.Format("SameCombatBookType setting : \n BookIndexType :{0} \n ", BookIndexType));
+            DomainManager.Mod.GetSetting(base.ModIdStr, "BookOneType", ref SameCombatBookType.BookOneType);
+            DomainManager.Mod.GetSetting(base.ModIdStr, "BookTwoType", ref SameCombatBookType.BookTwoType);
+            DomainManager.Mod.GetSetting(base.ModIdStr, "BookThreeType", ref SameCombatBookType.BookThreeType);
+            DomainManager.Mod.GetSetting(base.ModIdStr, "BookFourType", ref SameCombatBookType.BookFourType);
+            DomainManager.Mod.GetSetting(base.ModIdStr, "BookFiveType", ref SameCombatBookType.BookFiveType);
+            DomainManager.Mod.GetSetting(base.ModIdStr, "BookGetType", ref SameCombatBookType.BookGetType);
+            AdaptableLog.Info(string.Format("SameCombatBookType setting : \n BookIndexType :{0} \n BookOneType : {1} \n ", BookIndexType, BookOneType));
         }
 
         [HarmonyPrefix, HarmonyPatch(typeof(MerchantDomain), "ExchangeBook")]
@@ -51,9 +63,6 @@ namespace SameCombatBookType
             }
             else
             {
-                AdaptableLog.Info("prefixExchangeBook : " + Convert.ToString(npcId));
-                AdaptableLog.Info("prefixExchangeBook : " + Convert.ToString(selfAuthority));
-                AdaptableLog.Info("prefixExchangeBook : " + Convert.ToString(npcAuthority));
                 Inventory newGetBook = new Inventory();
                 foreach ((ItemKey item, int i) in getBook.Items)
                 {
@@ -69,8 +78,8 @@ namespace SameCombatBookType
                             // 残缺状态
                             element_SkillBooks.SetPageIncompleteState((ushort)0, context);
                             // 耐久
-                            //element_SkillBooks.SetMaxDurability(25, context);
-                            //element_SkillBooks.SetCurrDurability(25, context);
+                            //element_SkillBooks.SetMaxDurability(30, context);
+                            //element_SkillBooks.SetCurrDurability(30, context);
                             // 总纲
                             Traverse.Create(element_SkillBooks).Field("_pageTypes").SetValue((byte)BookIndexType);
                             //element_SkillBooks.SetModificationState(())
@@ -90,10 +99,15 @@ namespace SameCombatBookType
                     }
                     else
                     {
+                        // 将非功法书单独存一份
                         newGetBook.OfflineAdd(item, i);
                     }
                 }
-                getBook = newGetBook;
+                // 1为替换原本
+                if (BookGetType == 1)
+                {
+                    getBook = newGetBook;
+                }
             }
             return true;
         }
