@@ -33,6 +33,7 @@ namespace SameCombatBookType
         private static int BookFourType;
         private static int BookFiveType;
         private static int BookGetType;
+        private static ushort[] BookTypeArray = { };
 
         public override void Initialize()
         {
@@ -45,10 +46,15 @@ namespace SameCombatBookType
             AdaptableLog.Info("SameCombatBookType OnModSettingUpdate");
             DomainManager.Mod.GetSetting(base.ModIdStr, "BookIndexType", ref SameCombatBookType.BookIndexType);
             DomainManager.Mod.GetSetting(base.ModIdStr, "BookOneType", ref SameCombatBookType.BookOneType);
+            BookTypeArray.AddItem((ushort)BookOneType);
             DomainManager.Mod.GetSetting(base.ModIdStr, "BookTwoType", ref SameCombatBookType.BookTwoType);
+            BookTypeArray.AddItem((ushort)BookTwoType);
             DomainManager.Mod.GetSetting(base.ModIdStr, "BookThreeType", ref SameCombatBookType.BookThreeType);
+            BookTypeArray.AddItem((ushort)BookThreeType);
             DomainManager.Mod.GetSetting(base.ModIdStr, "BookFourType", ref SameCombatBookType.BookFourType);
+            BookTypeArray.AddItem((ushort)BookFourType);
             DomainManager.Mod.GetSetting(base.ModIdStr, "BookFiveType", ref SameCombatBookType.BookFiveType);
+            BookTypeArray.AddItem((ushort)BookFiveType);
             DomainManager.Mod.GetSetting(base.ModIdStr, "BookGetType", ref SameCombatBookType.BookGetType);
             AdaptableLog.Info(string.Format("SameCombatBookType setting : \n BookIndexType :{0} \n BookOneType : {1} \n ", BookIndexType, BookOneType));
         }
@@ -75,8 +81,16 @@ namespace SameCombatBookType
                         AdaptableLog.Info("   ---   " + Convert.ToString(element_SkillBooks.GetName()));
                         if (element_SkillBooks.IsCombatSkillBook())
                         {
+                            ushort num = 0;
+                            ushort num2 = 4;
+                            for (int j = 0; j < 5; j++)
+                            {
+                                num |= ((ushort)(BookTypeArray[j] * num2));
+                                num2 *= 4;
+                            }
+                            AdaptableLog.Info("   ---  num  " + Convert.ToString(num));
                             // 残缺状态
-                            element_SkillBooks.SetPageIncompleteState((ushort)0, context);
+                            element_SkillBooks.SetPageIncompleteState(num, context);
                             // 耐久
                             //element_SkillBooks.SetMaxDurability(30, context);
                             //element_SkillBooks.SetCurrDurability(30, context);
