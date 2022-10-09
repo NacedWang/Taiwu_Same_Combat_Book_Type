@@ -22,7 +22,85 @@ return {
 			},
 			SettingType = "Dropdown",
 			DefaultValue = 2
-		}
+		},
+		[3] = 
+		{
+			DisplayName = "第一篇",
+			Description = "第一篇类型",
+			Key = "BookOneType",
+			Options = 
+			{
+				[1] = "正",
+				[2] = "逆"
+			},
+			SettingType = "Dropdown",
+			DefaultValue = 0
+		},
+		[3] = 
+		{
+			DisplayName = "第二篇",
+			Description = "第二篇类型",
+			Key = "BookTwoType",
+			Options = 
+			{
+				[1] = "正",
+				[2] = "逆"
+			},
+			SettingType = "Dropdown",
+			DefaultValue = 0
+		},
+		[4] = 
+		{
+			DisplayName = "第三篇",
+			Description = "第三篇类型",
+			Key = "BookThreeType",
+			Options = 
+			{
+				[1] = "正",
+				[2] = "逆"
+			},
+			SettingType = "Dropdown",
+			DefaultValue = 0
+		},
+		[5] = 
+		{
+			DisplayName = "第四篇",
+			Description = "第四篇类型",
+			Key = "BookFourType",
+			Options = 
+			{
+				[1] = "正",
+				[2] = "逆"
+			},
+			SettingType = "Dropdown",
+			DefaultValue = 0
+		},
+		[6] = 
+		{
+			DisplayName = "第五篇",
+			Description = "第五篇类型",
+			Key = "BookFiveType",
+			Options = 
+			{
+				[1] = "正",
+				[2] = "逆"
+			},
+			SettingType = "Dropdown",
+			DefaultValue = 0
+		},
+		[7] = 
+		{
+			DisplayName = "书籍获取方式",
+			Description = "书籍获取方式",
+			Key = "BookGetType",
+			Options = 
+			{
+				[1] = "额外获取",
+				[2] = "替换原本"
+			},
+			SettingType = "Dropdown",
+			DefaultValue = 0
+		},
 	},
 	BackendPlugins = 
 	{
