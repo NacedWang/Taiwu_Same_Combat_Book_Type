@@ -2,7 +2,7 @@ return {
 	Description = "秦始皇统一六国，都能车同轨书同文，你说你个太吾世界，咋就这么多非法出版社呢？\
 本MOD可以自定义获取功法书的总纲、正逆练章节。\
 源码：https://github.com/NacedWang/Taiwu_Same_Combat_Book_Type",
-	Version = 2,
+	Version = 3,
 	Source = 1,
 	Author = "Naced",
 	DefaultSettings = 
